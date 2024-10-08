@@ -77,7 +77,7 @@ controls.enablePan = false; // панорама
 controls.enableDamping = true; // сглаживание
 
 const axesHelper = new THREE.AxesHelper(28750);
-scene.add(axesHelper);
+// scene.add(axesHelper);
 
 function animate() {
   requestAnimationFrame(animate);
