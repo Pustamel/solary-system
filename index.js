@@ -75,6 +75,20 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.autoRotate = false;
 controls.enablePan = false; // панорама
 controls.enableDamping = true; // сглаживание
+controls.panSpeed = 1;
+controls.rotateSpeed = 1;
+
+let i = 0;
+controls.addEventListener("change", () => {
+  const distance = camera.position.length();
+  i++;
+  if (i % 2 === 0) {
+    return;
+  }
+
+  controls.rotateSpeed = (Math.PI / 2) * (distance / 1e4).toFixed(3);
+  controls.update();
+});
 
 const axesHelper = new THREE.AxesHelper(28750);
 // scene.add(axesHelper);
@@ -85,36 +99,49 @@ function animate() {
 
   const pivot = new THREE.Vector3(0, 0, 0); // Точка вращения
 
-  const offsetMercury = new THREE.Vector3().copy(mercury.mesh.position).sub(pivot);// Позиция объекта относительно точки вращения
-  offsetMercury.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.003);// Поворот вокруг точки вращения
+  sun.mesh.rotation.x += 0.001;
+  sun.mesh.rotation.y += 0.001;
+
+  const offsetMercury = new THREE.Vector3()
+    .copy(mercury.mesh.position)
+    .sub(pivot); // Позиция объекта относительно точки вращения
+  offsetMercury.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.003); // Поворот вокруг точки вращения
   mercury.mesh.position.copy(pivot).add(offsetMercury); //обновить position объекта
 
-  const offsetVenus = new THREE.Vector3().copy(venus.mesh.position).sub(pivot);// Позиция объекта относительно точки вращения
-  offsetVenus.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.002);// Поворот вокруг точки вращения
+  const offsetVenus = new THREE.Vector3().copy(venus.mesh.position).sub(pivot); // Позиция объекта относительно точки вращения
+  offsetVenus.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.002); // Поворот вокруг точки вращения
   venus.mesh.position.copy(pivot).add(offsetVenus); //обновить position объекта
 
-  const offsetEarth = new THREE.Vector3().copy(earth.mesh.position).sub(pivot);// Позиция объекта относительно точки вращения
-  offsetEarth.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.001);// Поворот вокруг точки вращения
+  const offsetEarth = new THREE.Vector3().copy(earth.mesh.position).sub(pivot); // Позиция объекта относительно точки вращения
+  offsetEarth.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.001); // Поворот вокруг точки вращения
   earth.mesh.position.copy(pivot).add(offsetEarth); //обновить position объекта
 
-  const offsetMars = new THREE.Vector3().copy(mars.mesh.position).sub(pivot);// Позиция объекта относительно точки вращения
-  offsetMars.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.0007);// Поворот вокруг точки вращения
+  const offsetMars = new THREE.Vector3().copy(mars.mesh.position).sub(pivot); // Позиция объекта относительно точки вращения
+  offsetMars.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.0007); // Поворот вокруг точки вращения
   mars.mesh.position.copy(pivot).add(offsetMars); //обновить position объекта
 
-  const offsetJupiter = new THREE.Vector3().copy(jupiter.mesh.position).sub(pivot);// Позиция объекта относительно точки вращения
-  offsetJupiter.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.0003);// Поворот вокруг точки вращения
+  const offsetJupiter = new THREE.Vector3()
+    .copy(jupiter.mesh.position)
+    .sub(pivot); // Позиция объекта относительно точки вращения
+  offsetJupiter.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.0003); // Поворот вокруг точки вращения
   jupiter.mesh.position.copy(pivot).add(offsetJupiter); //обновить position объекта
 
-  const offsetSaturn = new THREE.Vector3().copy(saturn.mesh.position).sub(pivot);// Позиция объекта относительно точки вращения
-  offsetSaturn.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.0002);// Поворот вокруг точки вращения
+  const offsetSaturn = new THREE.Vector3()
+    .copy(saturn.mesh.position)
+    .sub(pivot); // Позиция объекта относительно точки вращения
+  offsetSaturn.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.0002); // Поворот вокруг точки вращения
   saturn.mesh.position.copy(pivot).add(offsetSaturn); //обновить position объекта
 
-  const offsetUranus = new THREE.Vector3().copy(uranus.mesh.position).sub(pivot);// Позиция объекта относительно точки вращения
-  offsetUranus.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.0001);// Поворот вокруг точки вращения
+  const offsetUranus = new THREE.Vector3()
+    .copy(uranus.mesh.position)
+    .sub(pivot); // Позиция объекта относительно точки вращения
+  offsetUranus.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.0001); // Поворот вокруг точки вращения
   uranus.mesh.position.copy(pivot).add(offsetUranus); //обновить position объекта
 
-  const offsetNeptune = new THREE.Vector3().copy(neptune.mesh.position).sub(pivot);// Позиция объекта относительно точки вращения
-  offsetNeptune.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.0001);// Поворот вокруг точки вращения
+  const offsetNeptune = new THREE.Vector3()
+    .copy(neptune.mesh.position)
+    .sub(pivot); // Позиция объекта относительно точки вращения
+  offsetNeptune.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.0001); // Поворот вокруг точки вращения
   neptune.mesh.position.copy(pivot).add(offsetNeptune); //обновить position объекта
 
   renderer.render(scene, camera);
